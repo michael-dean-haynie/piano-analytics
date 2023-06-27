@@ -6,7 +6,7 @@
 docker build . -t pianoanalytics-api
 
 # run container
-docker run -p 8080:80 -d pianoanalytics-api
+docker run -p 80:8080 -d pianoanalytics-api
 
 # Get container ID
 $ docker ps
@@ -18,7 +18,7 @@ $ docker logs <container id>
 $ docker exec -it <container id> /bin/bash
 
 # test
-curl -i localhost:49777
+curl -i localhost:80
 
 # kill our running container
 docker kill <container id>
