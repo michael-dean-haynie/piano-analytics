@@ -6,7 +6,7 @@
 docker build . -t pianoanalytics-api
 
 # run container
-docker run -p 49777:8080 -d pianoanalytics-api
+docker run -p 8080:80 -d pianoanalytics-api
 
 # Get container ID
 $ docker ps
