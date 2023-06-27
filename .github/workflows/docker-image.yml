@@ -14,7 +14,6 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - name: Extract branch name
     - name: Publish Docker Images to GPR
       uses: machine-learning-apps/gpr-docker-publish@v1.3
       id: docker
