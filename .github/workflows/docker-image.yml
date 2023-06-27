@@ -20,7 +20,7 @@ jobs:
       with:
         IMAGE_NAME: 'pianoanalytics-api:'
         DOCKERFILE_PATH: './Dockerfile'
-        BUILD_CONTEXT: 'pianoanalytics-api.git#main'
+        BUILD_CONTEXT: 'pianoanalytics-api.git#develop'
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
