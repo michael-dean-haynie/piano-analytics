@@ -2,9 +2,9 @@ name: Docker Image CI
 
 on:
   push:
-    branches: [ "develop" ]
+    branches: [ "main" ]
   pull_request:
-    branches: [ "develop" ]
+    branches: [ "main" ]
 
 jobs:
 
@@ -14,7 +14,23 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag pianoanalytics-api:$(date +%s)
+    - name: Extract branch name
     - name: Publish Docker Images to GPR
       uses: machine-learning-apps/gpr-docker-publish@v1.3
+      id: docker
+      with:
+        IMAGE_NAME: 'pianoanalytics-api:'
+        DOCKERFILE_PATH: './Dockerfile'
+        BUILD_CONTEXT: 'pianoanalytics-api.git#main'
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    # This second step is illustrative and shows how to reference the 
+    # output variables.  This is completely optional.
+    - name: Show outputs of previous step
+      run: |
+        echo "The name:tag of the Docker Image is: $VAR1"
+        echo "The docker image is hosted at $VAR2"
+      env:
+        VAR1: ${{ steps.docker.outputs.IMAGE_SHA_NAME }}
+        VAR2: ${{ steps.docker.outputs.IMAGE_URL }}
