@@ -11,10 +11,12 @@ COPY package*.json ./
 RUN npm install
 # If you are building your code for production
 # RUN npm ci --omit=dev
-# RUN npm run migrate # needed?
 
 # Bundle app source
 COPY . .
+
+# Compile typescript
+RUN npm run compile
 
 EXPOSE 80
 CMD [ "npm", "run", "start" ]
