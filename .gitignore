@@ -1,2 +1,11 @@
-node_modules/
+# macos
+.DS_Store
+
+# ide
 .idea/
+
+# node
+node_modules/
+
+# ts
+lib/
