@@ -8,7 +8,7 @@ on:
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
-  API_IMAGE: ghcr.io/michael-dean-haynie/${{ github.repository }}:main
+  API_IMAGE: ghcr.io/${{ github.repository }}:main
 
 
 jobs:
