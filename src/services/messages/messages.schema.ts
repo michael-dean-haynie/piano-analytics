@@ -10,7 +10,11 @@ import { dataValidator, queryValidator } from '../../validators'
 export const messageSchema = Type.Object(
   {
     id: Type.Number(),
-    text: Type.String()
+    timestampId: Type.Number(),
+    msOffset: Type.Number(),
+    statusByte: Type.Integer(),
+    dataByte1: Type.Integer(),
+    dataByte2: Type.Integer()
   },
   { $id: 'Message', additionalProperties: false }
 )
@@ -21,12 +25,13 @@ export const messageResolver = resolve<Message, HookContext>({})
 export const messageExternalResolver = resolve<Message, HookContext>({})
 
 // Schema for creating new entries
-export const messageDataSchema = Type.Pick(messageSchema, ['text'], {
+export const messageDataSchema = Type.Pick(messageSchema, ['timestampId', 'msOffset', 'statusByte', 'dataByte1', 'dataByte2'], {
   $id: 'MessageData'
 })
 export type MessageData = Static<typeof messageDataSchema>
 export const messageDataValidator = getValidator(messageDataSchema, dataValidator)
-export const messageDataResolver = resolve<Message, HookContext>({})
+export const messageDataResolver = resolve<Message, HookContext>({
+})
 
 // Schema for updating existing entries
 export const messagePatchSchema = Type.Partial(messageSchema, {
@@ -37,7 +42,7 @@ export const messagePatchValidator = getValidator(messagePatchSchema, dataValida
 export const messagePatchResolver = resolve<Message, HookContext>({})
 
 // Schema for allowed query properties
-export const messageQueryProperties = Type.Pick(messageSchema, ['id', 'text'])
+export const messageQueryProperties = Type.Pick(messageSchema, ['timestampId', 'msOffset', 'statusByte', 'dataByte1', 'dataByte2'])
 export const messageQuerySchema = Type.Intersect(
   [
     querySyntax(messageQueryProperties),
