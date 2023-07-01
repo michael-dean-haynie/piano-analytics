@@ -4,6 +4,14 @@ import type { TransportConnection, Application } from '@feathersjs/feathers'
 import authenticationClient from '@feathersjs/authentication-client'
 import type { AuthenticationClientOptions } from '@feathersjs/authentication-client'
 
+import { timestampClient } from './services/timestamps/timestamps.shared'
+export type {
+  Timestamp,
+  TimestampData,
+  TimestampQuery,
+  TimestampPatch
+} from './services/timestamps/timestamps.shared'
+
 import { messageClient } from './services/messages/messages.shared'
 export type { Message, MessageData, MessageQuery, MessagePatch } from './services/messages/messages.shared'
 
@@ -38,5 +46,6 @@ export const createClient = <Configuration = any>(
 
   client.configure(userClient)
   client.configure(messageClient)
+  client.configure(timestampClient)
   return client
 }
