@@ -8,7 +8,7 @@ on:
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
-  API_IMAGE: ghcr.io/michael-dean-haynie/pianoanalytics-api:main
+  API_IMAGE: ghcr.io/michael-dean-haynie/piano-analytics:main
 
 
 jobs:
