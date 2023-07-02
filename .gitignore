@@ -11,7 +11,12 @@ node_modules/
 lib/
 
 # frontend build result
-public/
+public/*
+!public/.gitkeep
+
+# feathers bundle consumed by frontend
+client-package/*
+!client-package/.gitkeep
 
 # ignore in memory database
 piano-analytics.sqlite

@@ -10,12 +10,14 @@ COPY package*.json ./
 COPY frontend/package*.json ./frontend/
 
 RUN npm install
-RUN cd frontend && npm install && cd ..
 # If you are building your code for production
 # RUN npm ci --omit=dev
 
 # Bundle app source
 COPY . .
+
+RUN npm run bundle:client
+RUN cd frontend && npm install && cd ..
 
 # Compile typescript
 RUN npm run compile
