@@ -21,5 +21,7 @@ COPY . .
 RUN npm run compile
 RUN cd frontend && npx ng build && cd ..
 
+RUN npm run migrate
+
 EXPOSE 80
 CMD [ "npm", "run", "start" ]
