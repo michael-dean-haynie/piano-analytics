@@ -1,10 +1,11 @@
 import io from 'socket.io-client'
 import socketio from '@feathersjs/socketio-client'
 import {createClient, Timestamp} from 'piano-analytics'
-import {Component, Inject} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {DOCUMENT} from "@angular/common";
 import authentication from '@feathersjs/authentication-client'
 import {Application} from "@feathersjs/feathers";
+import {MidiService} from "./midi.service";
 
 
 @Component({
@@ -12,31 +13,11 @@ import {Application} from "@feathersjs/feathers";
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
-  constructor() {
-    // this.authenticate(client);
-    //
-    // const timestampService = client.service('timestamps');
-    // timestampService.on('created', (timestamp: Timestamp) =>
-    //   console.log('Created a timestamp', timestamp)
-    // );
-
-  }
+export class AppComponent implements OnInit{
+  constructor(private midiService: MidiService) {}
   title = 'piano-analytics';
 
-  // async authenticate(client: Application) {
-  //   try {
-  //     // Authenticate with the local email/password strategy
-  //     await client.authenticate({
-  //       strategy: 'local',
-  //       email: 'js.bach@gc.com',
-  //       password: 'js.bach'
-  //     });
-  //     console.log('nice');
-  //     // Show e.g. logged in dashboard page
-  //   } catch (error: any) {
-  //     // Show login page (potentially with `e.message`)
-  //     console.error('Authentication error', error);
-  //   }
-  // }
+  async ngOnInit(): Promise<void> {
+    await this.midiService.initialize()
+  }
 }

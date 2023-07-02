@@ -20,16 +20,16 @@ app.configure(configuration(configurationValidator))
 // Set up Koa middleware
 app.use(cors())
 // enable angular's PathLocationStrategy without preventing serving js/css/etc.
-app.use(async (ctx, next) => {
-  if (ctx && ctx.path) {
-    const sgmts = ctx.path.split('/').filter(sgmt => sgmt.length)
-    const pathTargetsFile = sgmts.length && sgmts[sgmts.length - 1].includes('.')
-    if (!pathTargetsFile){
-      ctx.path = '/'
-    }
-  }
-  await next()
-});
+// app.use(async (ctx, next) => {
+//   if (ctx && ctx.path) {
+//     const sgmts = ctx.path.split('/').filter(sgmt => sgmt.length)
+//     const pathTargetsFile = sgmts.length && sgmts[sgmts.length - 1].includes('.')
+//     if (!pathTargetsFile){
+//       ctx.path = '/'
+//     }
+//   }
+//   await next()
+// });
 app.use(serveStatic(app.get('public')))
 app.use(errorHandler())
 app.use(parseAuthentication())

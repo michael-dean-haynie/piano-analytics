@@ -23,7 +23,7 @@ export class LoginComponent {
         email: this.username,
         password: this.password
       });
-      await this.router.navigate(['/'])
+      await this.router.navigate(['/home'])
     } catch (error) {
       console.log(error)
     }

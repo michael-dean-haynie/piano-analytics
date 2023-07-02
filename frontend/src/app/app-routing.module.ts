@@ -7,6 +7,7 @@ import {Router} from "@angular/router";
 
 const authGuard: CanActivateChildFn =
   async (route: ActivatedRouteSnapshot, state: RouterStateSnapshot) => {
+    console.log('running guard')
     const router = inject(Router);
     const feathersClient = inject(FeathersService).client;
     try {
@@ -19,15 +20,16 @@ const authGuard: CanActivateChildFn =
   };
 
 const routes: Routes = [
+  { path: '', redirectTo: 'home', pathMatch: "full" },
   { path : 'login', component: LoginComponent },
   { path: '', canActivateChild:[authGuard], children: [
-      { path : '', component: HomeComponent }
+      { path : 'home', component: HomeComponent }
     ]},
-  { path: '**', redirectTo: ''},
+  { path: '**', redirectTo: 'home'},
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { useHash: true })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
