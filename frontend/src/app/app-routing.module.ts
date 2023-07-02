@@ -19,7 +19,7 @@ const authGuard: CanActivateChildFn =
   };
 
 const routes: Routes = [
-  { path : 'login', component: LoginComponent},
+  { path : 'login', component: LoginComponent },
   { path: '', canActivateChild:[authGuard], children: [
       { path : '', component: HomeComponent }
     ]},
