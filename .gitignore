@@ -10,5 +10,8 @@ node_modules/
 # ts
 lib/
 
+# frontend build result
+public/
+
 # ignore in memory database
 piano-analytics.sqlite
