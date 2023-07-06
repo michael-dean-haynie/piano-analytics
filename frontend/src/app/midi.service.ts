@@ -17,17 +17,17 @@ export class MidiService {
     await this.establishTimestamp()
     WebMidi
       .enable()
-      .then(() => {
+      .then(async () => {
         console.log('Initializing MidiService');
         this.printInputsOutputs();
-        this.bindListeners();
-        WebMidi.addListener('connected', () => {
+        await this.bindListeners();
+        WebMidi.addListener('connected', async () => {
           this.printInputsOutputs();
-          this.bindListeners();
+          await this.bindListeners();
         });
-        WebMidi.addListener('disconnected', () => {
+        WebMidi.addListener('disconnected', async () => {
           this.printInputsOutputs();
-          this.bindListeners();
+          await this.bindListeners();
         })
       })
       .catch(err => console.error(err));
@@ -41,10 +41,24 @@ export class MidiService {
     WebMidi.outputs.forEach(output => console.log(`${output.manufacturer} | ${output.name}`));
   }
 
-  private bindListeners(): void {
+  private async bindListeners(): Promise<void> {
     const input = WebMidi.inputs[0];
-    input.addListener("midimessage", e => {
-      console.log(`${e.timestamp} | ${e.type} | ${e.message.type} | [${e.message.data}]`);
+    input.removeListener() // all of them
+    input.addListener("midimessage", async (e: any) => {
+      if (!this.timestamp || !this.timestamp.id){
+        return;
+      }
+      if (e.message.isChannelMessage && e.message.channel === 1) {
+        const messagesService = this.feathersService.client.service('messages');
+        const message = await messagesService.create({
+          timestampId: this.timestamp?.id,
+          msOffset: performance.now(),
+          statusByte: e.data[0],
+          dataByte1: e.data[1],
+          dataByte2: e.data[2],
+        });
+        console.log(message);
+      }
     })
   }
 
